@@ -2,10 +2,13 @@ package fit.se2.se02_project.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 public class Productstatus {
     private long id;
     private String name;
+    private Collection<Product> productsById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -46,5 +49,14 @@ public class Productstatus {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "productstatusByProductStatusId")
+    public Collection<Product> getProductsById() {
+        return productsById;
+    }
+
+    public void setProductsById(Collection<Product> productsById) {
+        this.productsById = productsById;
     }
 }

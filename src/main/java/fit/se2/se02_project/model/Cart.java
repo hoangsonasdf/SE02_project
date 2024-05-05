@@ -3,12 +3,15 @@ package fit.se2.se02_project.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 public class Cart {
     private long id;
     private Long userId;
     private Timestamp createdAt;
+    private User userByUserId;
+    private Collection<Cartitem> cartitemsById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -61,5 +64,24 @@ public class Cart {
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    public User getUserByUserId() {
+        return userByUserId;
+    }
+
+    public void setUserByUserId(User userByUserId) {
+        this.userByUserId = userByUserId;
+    }
+
+    @OneToMany(mappedBy = "cartByCartId")
+    public Collection<Cartitem> getCartitemsById() {
+        return cartitemsById;
+    }
+
+    public void setCartitemsById(Collection<Cartitem> cartitemsById) {
+        this.cartitemsById = cartitemsById;
     }
 }

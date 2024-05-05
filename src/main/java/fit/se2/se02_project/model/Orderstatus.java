@@ -2,11 +2,14 @@ package fit.se2.se02_project.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 public class Orderstatus {
     private long id;
     private String name;
     private String bootstapicon;
+    private Collection<Order> ordersById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -59,5 +62,14 @@ public class Orderstatus {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (bootstapicon != null ? bootstapicon.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "orderstatusByOrderStatusId")
+    public Collection<Order> getOrdersById() {
+        return ordersById;
+    }
+
+    public void setOrdersById(Collection<Order> ordersById) {
+        this.ordersById = ordersById;
     }
 }

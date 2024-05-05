@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 public class Product {
@@ -22,6 +23,11 @@ public class Product {
     private String image;
     private Long productStatusId;
     private BigDecimal saleprice;
+    private Collection<Cartitem> cartitemsById;
+    private Collection<Orderdetail> orderdetailsById;
+    private Category categoryByCategoryId;
+    private Productstatus productstatusByProductStatusId;
+    private Collection<Rate> ratesById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -219,5 +225,52 @@ public class Product {
         result = 31 * result + (productStatusId != null ? productStatusId.hashCode() : 0);
         result = 31 * result + (saleprice != null ? saleprice.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "productByProductId")
+    public Collection<Cartitem> getCartitemsById() {
+        return cartitemsById;
+    }
+
+    public void setCartitemsById(Collection<Cartitem> cartitemsById) {
+        this.cartitemsById = cartitemsById;
+    }
+
+    @OneToMany(mappedBy = "productByProductId")
+    public Collection<Orderdetail> getOrderdetailsById() {
+        return orderdetailsById;
+    }
+
+    public void setOrderdetailsById(Collection<Orderdetail> orderdetailsById) {
+        this.orderdetailsById = orderdetailsById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "id")
+    public Category getCategoryByCategoryId() {
+        return categoryByCategoryId;
+    }
+
+    public void setCategoryByCategoryId(Category categoryByCategoryId) {
+        this.categoryByCategoryId = categoryByCategoryId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "productStatusId", referencedColumnName = "id")
+    public Productstatus getProductstatusByProductStatusId() {
+        return productstatusByProductStatusId;
+    }
+
+    public void setProductstatusByProductStatusId(Productstatus productstatusByProductStatusId) {
+        this.productstatusByProductStatusId = productstatusByProductStatusId;
+    }
+
+    @OneToMany(mappedBy = "productByProductId")
+    public Collection<Rate> getRatesById() {
+        return ratesById;
+    }
+
+    public void setRatesById(Collection<Rate> ratesById) {
+        this.ratesById = ratesById;
     }
 }

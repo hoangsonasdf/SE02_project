@@ -2,10 +2,13 @@ package fit.se2.se02_project.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 public class Payment {
     private long id;
     private String name;
+    private Collection<Transaction> transactionsById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -46,5 +49,14 @@ public class Payment {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "paymentByPaymentId")
+    public Collection<Transaction> getTransactionsById() {
+        return transactionsById;
+    }
+
+    public void setTransactionsById(Collection<Transaction> transactionsById) {
+        this.transactionsById = transactionsById;
     }
 }

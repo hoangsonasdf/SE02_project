@@ -11,6 +11,8 @@ public class Orderdetail {
     private Long orderId;
     private Integer quantity;
     private BigDecimal price;
+    private Product productByProductId;
+    private Order orderByOrderId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -87,5 +89,25 @@ public class Orderdetail {
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "productID", referencedColumnName = "id")
+    public Product getProductByProductId() {
+        return productByProductId;
+    }
+
+    public void setProductByProductId(Product productByProductId) {
+        this.productByProductId = productByProductId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "orderID", referencedColumnName = "id")
+    public Order getOrderByOrderId() {
+        return orderByOrderId;
+    }
+
+    public void setOrderByOrderId(Order orderByOrderId) {
+        this.orderByOrderId = orderByOrderId;
     }
 }

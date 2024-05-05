@@ -3,6 +3,7 @@ package fit.se2.se02_project.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 public class Order {
@@ -15,6 +16,10 @@ public class Order {
     private String lastName;
     private String address;
     private String phone;
+    private User userByUserId;
+    private Orderstatus orderstatusByOrderStatusId;
+    private Collection<Orderdetail> orderdetailsById;
+    private Collection<Transaction> transactionsById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -140,5 +145,43 @@ public class Order {
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    public User getUserByUserId() {
+        return userByUserId;
+    }
+
+    public void setUserByUserId(User userByUserId) {
+        this.userByUserId = userByUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "orderStatusId", referencedColumnName = "id")
+    public Orderstatus getOrderstatusByOrderStatusId() {
+        return orderstatusByOrderStatusId;
+    }
+
+    public void setOrderstatusByOrderStatusId(Orderstatus orderstatusByOrderStatusId) {
+        this.orderstatusByOrderStatusId = orderstatusByOrderStatusId;
+    }
+
+    @OneToMany(mappedBy = "orderByOrderId")
+    public Collection<Orderdetail> getOrderdetailsById() {
+        return orderdetailsById;
+    }
+
+    public void setOrderdetailsById(Collection<Orderdetail> orderdetailsById) {
+        this.orderdetailsById = orderdetailsById;
+    }
+
+    @OneToMany(mappedBy = "orderByOrderId")
+    public Collection<Transaction> getTransactionsById() {
+        return transactionsById;
+    }
+
+    public void setTransactionsById(Collection<Transaction> transactionsById) {
+        this.transactionsById = transactionsById;
     }
 }

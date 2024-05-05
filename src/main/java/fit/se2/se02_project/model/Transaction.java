@@ -10,6 +10,8 @@ public class Transaction {
     private Long orderId;
     private Long paymentId;
     private BigDecimal total;
+    private Order orderByOrderId;
+    private Payment paymentByPaymentId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -74,5 +76,25 @@ public class Transaction {
         result = 31 * result + (paymentId != null ? paymentId.hashCode() : 0);
         result = 31 * result + (total != null ? total.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "orderID", referencedColumnName = "id")
+    public Order getOrderByOrderId() {
+        return orderByOrderId;
+    }
+
+    public void setOrderByOrderId(Order orderByOrderId) {
+        this.orderByOrderId = orderByOrderId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "paymentID", referencedColumnName = "id")
+    public Payment getPaymentByPaymentId() {
+        return paymentByPaymentId;
+    }
+
+    public void setPaymentByPaymentId(Payment paymentByPaymentId) {
+        this.paymentByPaymentId = paymentByPaymentId;
     }
 }

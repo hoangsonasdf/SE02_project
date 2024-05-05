@@ -11,6 +11,8 @@ public class Rate {
     private Long productId;
     private Short star;
     private Timestamp createAt;
+    private User userByUserId;
+    private Product productByProductId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -87,5 +89,25 @@ public class Rate {
         result = 31 * result + (star != null ? star.hashCode() : 0);
         result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    public User getUserByUserId() {
+        return userByUserId;
+    }
+
+    public void setUserByUserId(User userByUserId) {
+        this.userByUserId = userByUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "productId", referencedColumnName = "id")
+    public Product getProductByProductId() {
+        return productByProductId;
+    }
+
+    public void setProductByProductId(Product productByProductId) {
+        this.productByProductId = productByProductId;
     }
 }

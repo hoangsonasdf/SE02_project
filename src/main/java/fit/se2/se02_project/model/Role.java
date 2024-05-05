@@ -2,10 +2,13 @@ package fit.se2.se02_project.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 public class Role {
     private long id;
     private String name;
+    private Collection<User> usersById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -46,5 +49,14 @@ public class Role {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "roleByRoleId")
+    public Collection<User> getUsersById() {
+        return usersById;
+    }
+
+    public void setUsersById(Collection<User> usersById) {
+        this.usersById = usersById;
     }
 }

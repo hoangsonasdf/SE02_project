@@ -8,6 +8,8 @@ public class Cartitem {
     private Long productId;
     private Long cartId;
     private Integer quantity;
+    private Product productByProductId;
+    private Cart cartByCartId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -72,5 +74,25 @@ public class Cartitem {
         result = 31 * result + (cartId != null ? cartId.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "productID", referencedColumnName = "id")
+    public Product getProductByProductId() {
+        return productByProductId;
+    }
+
+    public void setProductByProductId(Product productByProductId) {
+        this.productByProductId = productByProductId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "cartID", referencedColumnName = "id")
+    public Cart getCartByCartId() {
+        return cartByCartId;
+    }
+
+    public void setCartByCartId(Cart cartByCartId) {
+        this.cartByCartId = cartByCartId;
     }
 }

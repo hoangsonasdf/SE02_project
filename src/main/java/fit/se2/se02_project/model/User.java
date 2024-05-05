@@ -3,6 +3,7 @@ package fit.se2.se02_project.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 public class User {
@@ -20,6 +21,10 @@ public class User {
     private Timestamp verifyAt;
     private Byte isActive;
     private Timestamp createAt;
+    private Collection<Cart> cartsById;
+    private Collection<Order> ordersById;
+    private Collection<Rate> ratesById;
+    private Role roleByRoleId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -204,5 +209,42 @@ public class User {
         result = 31 * result + (isActive != null ? isActive.hashCode() : 0);
         result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "userByUserId")
+    public Collection<Cart> getCartsById() {
+        return cartsById;
+    }
+
+    public void setCartsById(Collection<Cart> cartsById) {
+        this.cartsById = cartsById;
+    }
+
+    @OneToMany(mappedBy = "userByUserId")
+    public Collection<Order> getOrdersById() {
+        return ordersById;
+    }
+
+    public void setOrdersById(Collection<Order> ordersById) {
+        this.ordersById = ordersById;
+    }
+
+    @OneToMany(mappedBy = "userByUserId")
+    public Collection<Rate> getRatesById() {
+        return ratesById;
+    }
+
+    public void setRatesById(Collection<Rate> ratesById) {
+        this.ratesById = ratesById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "RoleId", referencedColumnName = "id")
+    public Role getRoleByRoleId() {
+        return roleByRoleId;
+    }
+
+    public void setRoleByRoleId(Role roleByRoleId) {
+        this.roleByRoleId = roleByRoleId;
     }
 }

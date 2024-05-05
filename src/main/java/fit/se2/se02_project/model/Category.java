@@ -3,6 +3,7 @@ package fit.se2.se02_project.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 public class Category {
@@ -14,6 +15,7 @@ public class Category {
     private String createBy;
     private Timestamp modifyAt;
     private String modifyBy;
+    private Collection<Product> productsById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -128,5 +130,14 @@ public class Category {
         result = 31 * result + (modifyAt != null ? modifyAt.hashCode() : 0);
         result = 31 * result + (modifyBy != null ? modifyBy.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "categoryByCategoryId")
+    public Collection<Product> getProductsById() {
+        return productsById;
+    }
+
+    public void setProductsById(Collection<Product> productsById) {
+        this.productsById = productsById;
     }
 }
