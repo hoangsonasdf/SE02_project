@@ -1,16 +1,49 @@
 package fit.se2.se02_project.service;
 
+import fit.se2.se02_project.model.User;
+import fit.se2.se02_project.repositories.RoleRepository;
+import fit.se2.se02_project.repositories.UserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class CommonService {
+    @Autowired
+    private JavaMailSender emailSender;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Value("${spring.mail.username}")
+    private String fromMail;
+
+    @Value("${spring.mail.password}")
+    private String fromPassword;
+
+    @Value("${app.jwt.secret}")
+    private String jwtSecret;
+
+    @Autowired
+    private HttpServletRequest request;
+
 
     public String createRandomString(int length) {
         Random rng = new Random();
@@ -44,5 +77,76 @@ public class CommonService {
         }
     }
 
-    
+    public void sendEmail(String subject, String body, String to) {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = null;
+        try {
+            helper = new MimeMessageHelper(message, true);
+            helper.setFrom(fromMail);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, false);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        emailSender.send(message);
+    }
+
+    public String createToken(User user) {
+        String userRole = roleRepository.findAll()
+                .stream()
+                .filter(r -> r.getId() == user.getRoleId())
+                .map(r -> r.getName())
+                .findAny()
+                .orElse(null);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("name", user.getUsername());
+        claims.put("role", userRole);
+
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) // 30 minutes
+                .signWith(SignatureAlgorithm.HS512, jwtSecret.getBytes())
+                .compact();
+
+        return token;
+    }
+
+    public User getCurrentUser() {
+        Cookie[] cookies = request.getCookies();
+        String token = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (token == null || token.isEmpty()) {
+            return null;
+        }
+
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            String username = (String) claims.get("name");
+
+            return userRepository.findAll()
+                    .stream()
+                    .filter(u -> u.getUsername() == username)
+                    .findAny()
+                    .orElse(null);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
 }

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chic_lighting</title>
+
+    <!-- Favicons -->
+    <link rel="icon" th:href="@{/img/favicon.png}">
+    <link rel="apple-touch-icon" th:href="@{/img/favicon.png}">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" th:href="@{/vendor/animate.css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/vendor/aos/aos.css}">
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap-icon/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendor/boxicons/css/boxicons.min.css}">
+    <link rel="stylesheet" th:href="@{/vendor/glightbox/css/glightbox.min.css}">
+    <link rel="stylesheet" th:href="@{/vendor/swiper/swiper-bundle.min.css}">
+
+    <!-- Template Main CSS File -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <!-- CDN Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- CDN JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<!-- ======= Top Bar ======= -->
+<div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+            <i class="bi bi-phone d-flex align-items-center"><span>+84 92 702 3447</span></i>
+            <i class="bi bi-clock d-flex align-items-center ms-4"><span> Mon-Sat: 9AM - 23PM</span></i>
+        </div>
+    </div>
+</div>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <a href="index.html" class="logo me-auto me-lg-0">
+                <img src="/img/favicon.png" alt="logo" class="img-fluid m-xl-1">
+            </a>
+            <h1 class="logo me-auto me-lg-0"><a th:href="@{/}">Chic & Lighting</a></h1>
+        </div>
+        <div class="d-flex align-items-center">
+
+            <nav id="navbar" class="navbar order-last order-lg-1">
+                <ul>
+                    <li><a class="nav-link" th:href="@{/}">Home</a></li>
+                    <li><a class="nav-link" th:href="@{/products}">Products</a></li>
+                    <li><a class="nav-link" th:href="@{/about}">About</a></li>
+                    <li><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+                    <li class="dropdown" th:if="${user == null}">
+                        <a th:href="@{/login}">
+                            <i class="bi bi bi-person" style="font-size: 30px;"></i>
+                        </a>
+                        <ul>
+                            <li><a th:href="@{/login}">Sign In</a></li>
+                            <li><a th:href="@{/register}">Register</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown" th:if="${user != null}">
+                        <a th:href="@{/profile}">
+                            Hi, <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
+                            <i class="bi bi-caret-down-fill"></i>
+                        </a>
+                        <ul>
+                            <li><a th:href="@{/profile}">Profile</a></li>
+                            <li><a th:href="@{/order/history}">History order</a></li>
+                            <li class="d-flex justify-content-end mt-4">
+                                <form method="POST" th:action="@{/logout}">
+                                    <button class="btn btn-danger rounded-0 mx-2" type="submit" name="logout">Log out</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a th:href="@{/cart}" class="nav-link">
+                            <i class="bi bi bi-cart" style="font-size: 30px;"></i>
+                        </a>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+        </div>
+
+    </div>
+</header><!-- End Header -->
+
+<!-- Content placeholder -->
+<div layout:fragment="content">
+    <!-- content page will override this -->
+</div>
+
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="mt-5">
+    <div class="footer-top">
+        <!-- Footer content here -->
+    </div>
+
+    <div class="container">
+        <!-- Footer content here -->
+    </div>
+</footer><!-- End Footer -->
+
+<!-- Vendor JS Files -->
+<script src="/vendor/aos/aos.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="/vendor/masonry/masonry.pkgd.min.js"></script>
+
+<!-- Main JavaScript File -->
+<script src="/js/main.js"></script>
+<!-- Additional scripts placeholder -->
+<div th:insert="scripts"></div>
+</body>
+</html>

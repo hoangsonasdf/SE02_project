@@ -126,7 +126,7 @@ h6 {
   --------------------------------------------------------------*/
 @media screen and (max-width: 768px) {
     [data-aos-delay] {
-        transition-delay: 0 !important;
+        transition-delay: 0ms !important;
     }
 }
 
@@ -437,7 +437,7 @@ h6 {
 
 #hero h2 {
     color: #666;
-    margin-bottom: 10px 0 0 0;
+    margin-bottom: 10px;
     font-size: 22px;
 }
 
@@ -1186,7 +1186,7 @@ section {
   --------------------------------------------------------------*/
 #product {
     margin-top: 115px;
-};
+}
 
 /* product header */
 .header input[type = search]{
