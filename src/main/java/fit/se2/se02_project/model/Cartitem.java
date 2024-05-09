@@ -3,17 +3,23 @@ package fit.se2.se02_project.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "`cartitem`")
 public class Cartitem {
-    private long id;
-    private Long productId;
-    private Long cartId;
-    private Integer quantity;
-    private Product productByProductId;
-    private Cart cartByCartId;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+
+    @Basic
+    @Column(name = "quantity")
+    private Integer quantity;
+    @ManyToOne
+    @JoinColumn(name = "productID", referencedColumnName = "id")
+    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "cartID", referencedColumnName = "id")
+    private Cart cart;
+
     public long getId() {
         return id;
     }
@@ -22,28 +28,7 @@ public class Cartitem {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "productID", nullable = true)
-    public Long getProductId() {
-        return productId;
-    }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    @Basic
-    @Column(name = "cartID", nullable = true)
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
-    }
-
-    @Basic
-    @Column(name = "quantity", nullable = true)
     public Integer getQuantity() {
         return quantity;
     }
@@ -60,8 +45,6 @@ public class Cartitem {
         Cartitem cartitem = (Cartitem) o;
 
         if (id != cartitem.id) return false;
-        if (productId != null ? !productId.equals(cartitem.productId) : cartitem.productId != null) return false;
-        if (cartId != null ? !cartId.equals(cartitem.cartId) : cartitem.cartId != null) return false;
         if (quantity != null ? !quantity.equals(cartitem.quantity) : cartitem.quantity != null) return false;
 
         return true;
@@ -70,29 +53,23 @@ public class Cartitem {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (productId != null ? productId.hashCode() : 0);
-        result = 31 * result + (cartId != null ? cartId.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "productID", referencedColumnName = "id")
-    public Product getProductByProductId() {
-        return productByProductId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductByProductId(Product productByProductId) {
-        this.productByProductId = productByProductId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "cartID", referencedColumnName = "id")
-    public Cart getCartByCartId() {
-        return cartByCartId;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartByCartId(Cart cartByCartId) {
-        this.cartByCartId = cartByCartId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

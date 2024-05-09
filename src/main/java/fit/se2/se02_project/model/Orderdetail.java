@@ -5,18 +5,25 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "`orderdetail`")
 public class Orderdetail {
-    private long id;
-    private Long productId;
-    private Long orderId;
-    private Integer quantity;
-    private BigDecimal price;
-    private Product productByProductId;
-    private Order orderByOrderId;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "quantity")
+    private Integer quantity;
+    @Basic
+    @Column(name = "price")
+    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "productID", referencedColumnName = "id")
+    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "orderID", referencedColumnName = "id")
+    private Order order;
+
     public long getId() {
         return id;
     }
@@ -25,28 +32,7 @@ public class Orderdetail {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "productID", nullable = true)
-    public Long getProductId() {
-        return productId;
-    }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    @Basic
-    @Column(name = "orderID", nullable = true)
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    @Basic
-    @Column(name = "quantity", nullable = true)
     public Integer getQuantity() {
         return quantity;
     }
@@ -55,8 +41,6 @@ public class Orderdetail {
         this.quantity = quantity;
     }
 
-    @Basic
-    @Column(name = "price", nullable = true, precision = 2)
     public BigDecimal getPrice() {
         return price;
     }
@@ -73,8 +57,6 @@ public class Orderdetail {
         Orderdetail that = (Orderdetail) o;
 
         if (id != that.id) return false;
-        if (productId != null ? !productId.equals(that.productId) : that.productId != null) return false;
-        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
 
@@ -84,30 +66,24 @@ public class Orderdetail {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (productId != null ? productId.hashCode() : 0);
-        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "productID", referencedColumnName = "id")
-    public Product getProductByProductId() {
-        return productByProductId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductByProductId(Product productByProductId) {
-        this.productByProductId = productByProductId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "orderID", referencedColumnName = "id")
-    public Order getOrderByOrderId() {
-        return orderByOrderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderByOrderId(Order orderByOrderId) {
-        this.orderByOrderId = orderByOrderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

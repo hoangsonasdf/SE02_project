@@ -5,18 +5,26 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "`rate`")
 public class Rate {
-    private long id;
-    private Long userId;
-    private Long productId;
-    private Short star;
-    private Timestamp createAt;
-    private User userByUserId;
-    private Product productByProductId;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+
+    @Basic
+    @Column(name = "star")
+    private Short star;
+    @Basic
+    @Column(name = "createAt")
+    private Timestamp createAt;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "productId", referencedColumnName = "id")
+    private Product product;
+
     public long getId() {
         return id;
     }
@@ -25,28 +33,6 @@ public class Rate {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "userId", nullable = true)
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "productId", nullable = true)
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    @Basic
-    @Column(name = "star", nullable = true)
     public Short getStar() {
         return star;
     }
@@ -55,8 +41,6 @@ public class Rate {
         this.star = star;
     }
 
-    @Basic
-    @Column(name = "createAt", nullable = true)
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -73,8 +57,6 @@ public class Rate {
         Rate rate = (Rate) o;
 
         if (id != rate.id) return false;
-        if (userId != null ? !userId.equals(rate.userId) : rate.userId != null) return false;
-        if (productId != null ? !productId.equals(rate.productId) : rate.productId != null) return false;
         if (star != null ? !star.equals(rate.star) : rate.star != null) return false;
         if (createAt != null ? !createAt.equals(rate.createAt) : rate.createAt != null) return false;
 
@@ -84,30 +66,24 @@ public class Rate {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (productId != null ? productId.hashCode() : 0);
         result = 31 * result + (star != null ? star.hashCode() : 0);
         result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    public User getUserByUserId() {
-        return userByUserId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id")
-    public Product getProductByProductId() {
-        return productByProductId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductByProductId(Product productByProductId) {
-        this.productByProductId = productByProductId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

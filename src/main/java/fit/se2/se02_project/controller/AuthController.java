@@ -32,48 +32,47 @@ public class AuthController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("request") LoginRequest request,
-                        HttpServletResponse response,
-                        RedirectAttributes redirectAttributes) {
-        try {
-            Map<String, String> errorList = new HashMap<>();
-            if (request.getUsername() == null) {
-                errorList.put("NullUsername", "* Username cannot be empty");
-            }
-            if (request.getPassword() == null) {
-                errorList.put("NullPassword", "* Password cannot be empty");
-            }
-            if (!errorList.isEmpty()) {
-                redirectAttributes.addFlashAttribute("errorList", errorList);
-                return "redirect:/login";
-            }
-
-            String hashedPassword = commonService.hash(request.getPassword());
-            String hashedPasswordLower = hashedPassword.toLowerCase();
-            User user = userRepository.findByUsernameIgnoreCase(request.getUsername());
-            if (user == null || !user.getPassword().equalsIgnoreCase(hashedPasswordLower)) {
-                errorList.put("Invalid", "* Username or Password is not valid");
-                redirectAttributes.addFlashAttribute("errorList", errorList);
-                return "redirect:/login";
-            }
-
-            String token = commonService.createToken(user);
-            Cookie tokenCookie = new Cookie("token", token);
-            tokenCookie.setHttpOnly(true);
-            tokenCookie.setSameSite(javax.servlet.http.Cookie.SameSiteMode.STRICT);
-            tokenCookie.setMaxAge(1800); // 30 minutes
-            response.addCookie(tokenCookie);
-
-            if (user.getRoleId() == 1) {
-                int currentMonth = LocalDateTime.now().getMonthValue();
-                int currentYear = LocalDateTime.now().getYear();
-                return "redirect:/dashboard?year=" + currentYear + "&month=" + currentMonth;
-            } else {
-                return "redirect:/home";
-            }
-        } catch (Exception ex) {
-            return "redirect:/error?message=" + ex.getMessage();
-        }
-    }
+//    @PostMapping("/login")
+//    public String login(@ModelAttribute("request") LoginRequest request,
+//                        HttpServletResponse response,
+//                        RedirectAttributes redirectAttributes) {
+//        try {
+//            Map<String, String> errorList = new HashMap<>();
+//            if (request.getUsername() == null) {
+//                errorList.put("NullUsername", "* Username cannot be empty");
+//            }
+//            if (request.getPassword() == null) {
+//                errorList.put("NullPassword", "* Password cannot be empty");
+//            }
+//            if (!errorList.isEmpty()) {
+//                redirectAttributes.addFlashAttribute("errorList", errorList);
+//                return "redirect:/login";
+//            }
+//
+//            String hashedPassword = commonService.hash(request.getPassword());
+//            String hashedPasswordLower = hashedPassword.toLowerCase();
+//            User user = userRepository.findByUsernameIgnoreCase(request.getUsername());
+//            if (user == null || !user.getPassword().equalsIgnoreCase(hashedPasswordLower)) {
+//                errorList.put("Invalid", "* Username or Password is not valid");
+//                redirectAttributes.addFlashAttribute("errorList", errorList);
+//                return "redirect:/login";
+//            }
+//
+//            String token = commonService.createToken(user);
+//            Cookie tokenCookie = new Cookie("token", token);
+//            tokenCookie.setHttpOnly(true);
+//            tokenCookie.setMaxAge(1800); // 30 minutes
+//            response.addCookie(tokenCookie);
+//
+//            if (user.getRoleId() == 1) {
+//                int currentMonth = LocalDateTime.now().getMonthValue();
+//                int currentYear = LocalDateTime.now().getYear();
+//                return "redirect:/dashboard?year=" + currentYear + "&month=" + currentMonth;
+//            } else {
+//                return "redirect:/home";
+//            }
+//        } catch (Exception ex) {
+//            return "redirect:/error?message=" + ex.getMessage();
+//        }
+//    }
 }

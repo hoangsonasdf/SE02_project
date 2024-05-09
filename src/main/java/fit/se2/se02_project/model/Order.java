@@ -6,24 +6,42 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
+@Table(name = "`order`")
 public class Order {
-    private long id;
-    private Long userId;
-    private Long orderStatusId;
-    private Timestamp orderDate;
-    private String notes;
-    private String firstname;
-    private String lastName;
-    private String address;
-    private String phone;
-    private User userByUserId;
-    private Orderstatus orderstatusByOrderStatusId;
-    private Collection<Orderdetail> orderdetailsById;
-    private Collection<Transaction> transactionsById;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+
+    @Basic
+    @Column(name = "orderDate")
+    private Timestamp orderDate;
+    @Basic
+    @Column(name = "notes")
+    private String notes;
+    @Basic
+    @Column(name = "firstname")
+    private String firstname;
+    @Basic
+    @Column(name = "lastName")
+    private String lastName;
+    @Basic
+    @Column(name = "address")
+    private String address;
+    @Basic
+    @Column(name = "phone")
+    private String phone;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "orderStatusId", referencedColumnName = "id")
+    private Orderstatus orderstatus;
+    @OneToMany(mappedBy = "order")
+    private Collection<Orderdetail> orderdetails;
+    @OneToMany(mappedBy = "order")
+    private Collection<Transaction> transactions;
+
     public long getId() {
         return id;
     }
@@ -32,28 +50,7 @@ public class Order {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "userId", nullable = true)
-    public Long getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "orderStatusId", nullable = true)
-    public Long getOrderStatusId() {
-        return orderStatusId;
-    }
-
-    public void setOrderStatusId(Long orderStatusId) {
-        this.orderStatusId = orderStatusId;
-    }
-
-    @Basic
-    @Column(name = "orderDate", nullable = false)
     public Timestamp getOrderDate() {
         return orderDate;
     }
@@ -62,8 +59,6 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    @Basic
-    @Column(name = "notes", nullable = true, length = -1)
     public String getNotes() {
         return notes;
     }
@@ -72,8 +67,6 @@ public class Order {
         this.notes = notes;
     }
 
-    @Basic
-    @Column(name = "firstname", nullable = true, length = 50)
     public String getFirstname() {
         return firstname;
     }
@@ -82,8 +75,6 @@ public class Order {
         this.firstname = firstname;
     }
 
-    @Basic
-    @Column(name = "lastName", nullable = true, length = 50)
     public String getLastName() {
         return lastName;
     }
@@ -92,8 +83,6 @@ public class Order {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "address", nullable = true, length = 100)
     public String getAddress() {
         return address;
     }
@@ -102,8 +91,6 @@ public class Order {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = true, length = 11)
     public String getPhone() {
         return phone;
     }
@@ -120,9 +107,6 @@ public class Order {
         Order order = (Order) o;
 
         if (id != order.id) return false;
-        if (userId != null ? !userId.equals(order.userId) : order.userId != null) return false;
-        if (orderStatusId != null ? !orderStatusId.equals(order.orderStatusId) : order.orderStatusId != null)
-            return false;
         if (orderDate != null ? !orderDate.equals(order.orderDate) : order.orderDate != null) return false;
         if (notes != null ? !notes.equals(order.notes) : order.notes != null) return false;
         if (firstname != null ? !firstname.equals(order.firstname) : order.firstname != null) return false;
@@ -136,8 +120,6 @@ public class Order {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (orderStatusId != null ? orderStatusId.hashCode() : 0);
         result = 31 * result + (orderDate != null ? orderDate.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
@@ -147,41 +129,35 @@ public class Order {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    public User getUserByUserId() {
-        return userByUserId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "orderStatusId", referencedColumnName = "id")
-    public Orderstatus getOrderstatusByOrderStatusId() {
-        return orderstatusByOrderStatusId;
+    public Orderstatus getOrderstatus() {
+        return orderstatus;
     }
 
-    public void setOrderstatusByOrderStatusId(Orderstatus orderstatusByOrderStatusId) {
-        this.orderstatusByOrderStatusId = orderstatusByOrderStatusId;
+    public void setOrderstatus(Orderstatus orderstatus) {
+        this.orderstatus = orderstatus;
     }
 
-    @OneToMany(mappedBy = "orderByOrderId")
-    public Collection<Orderdetail> getOrderdetailsById() {
-        return orderdetailsById;
+    public Collection<Orderdetail> getOrderdetails() {
+        return orderdetails;
     }
 
-    public void setOrderdetailsById(Collection<Orderdetail> orderdetailsById) {
-        this.orderdetailsById = orderdetailsById;
+    public void setOrderdetails(Collection<Orderdetail> orderdetails) {
+        this.orderdetails = orderdetails;
     }
 
-    @OneToMany(mappedBy = "orderByOrderId")
-    public Collection<Transaction> getTransactionsById() {
-        return transactionsById;
+    public Collection<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setTransactionsById(Collection<Transaction> transactionsById) {
-        this.transactionsById = transactionsById;
+    public void setTransactions(Collection<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

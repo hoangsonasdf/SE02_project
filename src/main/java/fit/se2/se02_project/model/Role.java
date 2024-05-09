@@ -5,14 +5,18 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(name = "`role`")
 public class Role {
-    private long id;
-    private String name;
-    private Collection<User> usersById;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "name")
+    private String name;
+    @OneToMany(mappedBy = "role")
+    private Collection<User> users;
+
     public long getId() {
         return id;
     }
@@ -21,8 +25,6 @@ public class Role {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 50)
     public String getName() {
         return name;
     }
@@ -51,12 +53,11 @@ public class Role {
         return result;
     }
 
-    @OneToMany(mappedBy = "roleByRoleId")
-    public Collection<User> getUsersById() {
-        return usersById;
+    public Collection<User> getUsers() {
+        return users;
     }
 
-    public void setUsersById(Collection<User> usersById) {
-        this.usersById = usersById;
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 }

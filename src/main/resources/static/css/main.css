@@ -1,6 +1,6 @@
 /**
 * Template Name: Chic & Lighting - v1.0.0
-* Author: Hanu - Group 7/E-Project Semester 2 Third year
+* Author: Group 7/E-Project Semester 1
 */
 
 /*--------------------------------------------------------------
@@ -126,7 +126,7 @@ h6 {
   --------------------------------------------------------------*/
 @media screen and (max-width: 768px) {
     [data-aos-delay] {
-        transition-delay: 0ms !important;
+        transition-delay: 0s !important;
     }
 }
 
@@ -204,7 +204,7 @@ h6 {
 # Navigation Menu
 --------------------------------------------------------------*/
 /**
-* Desktop Navigation 
+* Desktop Navigation
 **/
 .navbar {
     padding: 0;
@@ -290,7 +290,7 @@ h6 {
 }
 
 /**
-  * Mobile Navigation 
+  * Mobile Navigation
 **/
 .mobile-nav-toggle {
     color: #000;
@@ -437,7 +437,7 @@ h6 {
 
 #hero h2 {
     color: #666;
-    margin-bottom: 10px;
+    margin-bottom: 10px 0 0 0;
     font-size: 22px;
 }
 
@@ -886,8 +886,8 @@ section {
   --------------------------------------------------------------*/
 #contact {
     margin-top: 115px;
-} 
-  
+}
+
 .contact .info {
     width: 100%;
 }
@@ -1186,7 +1186,7 @@ section {
   --------------------------------------------------------------*/
 #product {
     margin-top: 115px;
-}
+};
 
 /* product header */
 .header input[type = search]{
@@ -1382,7 +1382,7 @@ section {
 }
 
 .login > div{
-   width: 100%;
+    width: 100%;
 }
 
 .lstfilterbtn{
@@ -1390,7 +1390,7 @@ section {
 }
 
 @media (max-width: 547px){
-   
+
     .header input[type=search],.bi-search{
         font-size: 8px;
         height: 26px;
@@ -1413,7 +1413,7 @@ section {
         margin-top: 5px !important;
         margin-bottom: 5px !important;
     }
-    
+
     .shopcard{
         grid-template-columns: 50% 50%;
     }
@@ -1493,11 +1493,11 @@ section {
         margin-top: 5px !important;
         margin-bottom: 5px !important;
     }
-    
+
     .shopcard{
         grid-template-columns: 33% 33% 33%;
     }
-   
+
     .card-title{
         max-width: 100%;
         font-size: 10px;
@@ -1529,9 +1529,9 @@ section {
 /*--------------------------------------------------------------
   # Product Detail Template
   --------------------------------------------------------------*/
-  #product-detail{
+#product-detail{
     margin-top: 155px;
-  }
+}
 
 .mobile-res{
     display: none;
@@ -1585,7 +1585,7 @@ input[type = number]{
 input[type=number]::-webkit-inner-spin-button {
     opacity: 1;
     margin: 1px;
-  }
+}
 input[type = submit]{
     width: 100%;
     border-radius: 0;
@@ -1639,7 +1639,7 @@ input[type = submit]{
     .lstype >div>.d-flex{
         display: block !important;
     }
-    
+
     .slide{
         padding: 22px;
         width: 100%;
@@ -1665,30 +1665,30 @@ input[type = submit]{
 /*--------------------------------------------------------------
   # Shopping Cart Template
   --------------------------------------------------------------*/
-  #cart {
+#cart {
     margin-top: 155px;
     min-height: 30em;
-  }
+}
 
-  #cart table {
+#cart table {
     width: 100%;
     margin-top: 12px;
-  }
+}
 
-  #cart table tr th,
-  #cart table tr td {
+#cart table tr th,
+#cart table tr td {
     border-top: 1px solid #f1f1f1;
     padding: 20px;
     text-align: center;
-  }
+}
 
-  #cart table tr img {
+#cart table tr img {
     height: 10em;
-  }
+}
 /*--------------------------------------------------------------
   # History Order Template
   --------------------------------------------------------------*/
-  #historyorder {
+#historyorder {
     margin-top: 155px;
     min-height: 30em;
-  }
+}

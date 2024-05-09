@@ -5,14 +5,18 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(name = "`productstatus`")
 public class Productstatus {
-    private long id;
-    private String name;
-    private Collection<Product> productsById;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "name")
+    private String name;
+    @OneToMany(mappedBy = "productstatus")
+    private Collection<Product> products;
+
     public long getId() {
         return id;
     }
@@ -21,8 +25,6 @@ public class Productstatus {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 100)
     public String getName() {
         return name;
     }
@@ -51,12 +53,11 @@ public class Productstatus {
         return result;
     }
 
-    @OneToMany(mappedBy = "productstatusByProductStatusId")
-    public Collection<Product> getProductsById() {
-        return productsById;
+    public Collection<Product> getProducts() {
+        return products;
     }
 
-    public void setProductsById(Collection<Product> productsById) {
-        this.productsById = productsById;
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
     }
 }

@@ -4,6 +4,7 @@ import fit.se2.se02_project.dto.CategoryDTO;
 import fit.se2.se02_project.dto.FeedbackDTO;
 import fit.se2.se02_project.model.Category;
 import fit.se2.se02_project.model.Feedback;
+import fit.se2.se02_project.model.Product;
 import fit.se2.se02_project.repositories.CategoryRepository;
 import fit.se2.se02_project.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,11 @@ public class HomeController {
         List<FeedbackDTO> feedbacks = feedbackRepository.findAll()
                 .stream()
                 .filter(f -> f.getRate() == 3)
+                .limit(3)
                 .map(this::toFeedbackDTO)
                 .collect(Collectors.toList());
         List<CategoryDTO> categories = categoryRepository.findAll()
                 .stream()
-                .filter(c -> c.getIsActive() == 1)
                 .map(this::toCategoriesDTO)
                 .collect(Collectors.toList());
 
@@ -44,12 +45,12 @@ public class HomeController {
     }
 
     private CategoryDTO toCategoriesDTO(Category category) {
-        return new CategoryDTO(category.getId(), category.getCategoryName(), category.getDescription()
-        , category.getProductsById()
-                .stream()
-                .map(p -> p.getImage())
-                .findFirst()
-                .orElse(null));
+        List<Product> products = category.getProducts().stream().toList();
+        String image = null;
+        if (!products.isEmpty()) {
+            image = products.get(0).getImage();
+        }
+        return new CategoryDTO(category.getId(), category.getCategoryName(), category.getDescription(), image);
     }
 
     private FeedbackDTO toFeedbackDTO(Feedback feedback) {

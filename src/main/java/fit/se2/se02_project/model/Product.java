@@ -7,31 +7,61 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
+@Table(name = "`product`")
 public class Product {
-    private long id;
-    private String productName;
-    private String title;
-    private BigDecimal price;
-    private Long categoryId;
-    private String description;
-    private Integer quantity;
-    private Byte isActive;
-    private Timestamp createAt;
-    private String createBy;
-    private Timestamp modifyAt;
-    private String modifyBy;
-    private String image;
-    private Long productStatusId;
-    private BigDecimal saleprice;
-    private Collection<Cartitem> cartitemsById;
-    private Collection<Orderdetail> orderdetailsById;
-    private Category categoryByCategoryId;
-    private Productstatus productstatusByProductStatusId;
-    private Collection<Rate> ratesById;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "productName")
+    private String productName;
+    @Basic
+    @Column(name = "title")
+    private String title;
+    @Basic
+    @Column(name = "price")
+    private BigDecimal price;
+    @Basic
+    @Column(name = "description")
+    private String description;
+    @Basic
+    @Column(name = "quantity")
+    private Integer quantity;
+    @Basic
+    @Column(name = "isActive")
+    private Byte isActive;
+    @Basic
+    @Column(name = "createAt")
+    private Timestamp createAt;
+    @Basic
+    @Column(name = "createBy")
+    private String createBy;
+    @Basic
+    @Column(name = "modifyAt")
+    private Timestamp modifyAt;
+    @Basic
+    @Column(name = "modifyBy")
+    private String modifyBy;
+    @Basic
+    @Column(name = "image")
+    private String image;
+    @Basic
+    @Column(name = "saleprice")
+    private BigDecimal saleprice;
+    @OneToMany(mappedBy = "product")
+    private Collection<Cartitem> cartitems;
+    @OneToMany(mappedBy = "product")
+    private Collection<Orderdetail> orderdetails;
+    @ManyToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "id")
+    private Category category;
+    @ManyToOne
+    @JoinColumn(name = "productStatusId", referencedColumnName = "id")
+    private Productstatus productstatus;
+    @OneToMany(mappedBy = "product")
+    private Collection<Rate> rates;
+
     public long getId() {
         return id;
     }
@@ -40,8 +70,6 @@ public class Product {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "productName", nullable = true, length = 255)
     public String getProductName() {
         return productName;
     }
@@ -50,8 +78,6 @@ public class Product {
         this.productName = productName;
     }
 
-    @Basic
-    @Column(name = "title", nullable = true, length = 50)
     public String getTitle() {
         return title;
     }
@@ -60,8 +86,6 @@ public class Product {
         this.title = title;
     }
 
-    @Basic
-    @Column(name = "price", nullable = true, precision = 2)
     public BigDecimal getPrice() {
         return price;
     }
@@ -70,18 +94,6 @@ public class Product {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "categoryId", nullable = true)
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
     public String getDescription() {
         return description;
     }
@@ -90,8 +102,6 @@ public class Product {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "quantity", nullable = true)
     public Integer getQuantity() {
         return quantity;
     }
@@ -100,8 +110,6 @@ public class Product {
         this.quantity = quantity;
     }
 
-    @Basic
-    @Column(name = "isActive", nullable = true)
     public Byte getIsActive() {
         return isActive;
     }
@@ -110,8 +118,6 @@ public class Product {
         this.isActive = isActive;
     }
 
-    @Basic
-    @Column(name = "createAt", nullable = true)
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -120,8 +126,6 @@ public class Product {
         this.createAt = createAt;
     }
 
-    @Basic
-    @Column(name = "createBy", nullable = true, length = 50)
     public String getCreateBy() {
         return createBy;
     }
@@ -130,8 +134,6 @@ public class Product {
         this.createBy = createBy;
     }
 
-    @Basic
-    @Column(name = "modifyAt", nullable = true)
     public Timestamp getModifyAt() {
         return modifyAt;
     }
@@ -140,8 +142,6 @@ public class Product {
         this.modifyAt = modifyAt;
     }
 
-    @Basic
-    @Column(name = "modifyBy", nullable = true, length = 50)
     public String getModifyBy() {
         return modifyBy;
     }
@@ -150,8 +150,6 @@ public class Product {
         this.modifyBy = modifyBy;
     }
 
-    @Basic
-    @Column(name = "image", nullable = true, length = -1)
     public String getImage() {
         return image;
     }
@@ -160,18 +158,7 @@ public class Product {
         this.image = image;
     }
 
-    @Basic
-    @Column(name = "productStatusId", nullable = true)
-    public Long getProductStatusId() {
-        return productStatusId;
-    }
 
-    public void setProductStatusId(Long productStatusId) {
-        this.productStatusId = productStatusId;
-    }
-
-    @Basic
-    @Column(name = "saleprice", nullable = true, precision = 2)
     public BigDecimal getSaleprice() {
         return saleprice;
     }
@@ -191,7 +178,6 @@ public class Product {
         if (productName != null ? !productName.equals(product.productName) : product.productName != null) return false;
         if (title != null ? !title.equals(product.title) : product.title != null) return false;
         if (price != null ? !price.equals(product.price) : product.price != null) return false;
-        if (categoryId != null ? !categoryId.equals(product.categoryId) : product.categoryId != null) return false;
         if (description != null ? !description.equals(product.description) : product.description != null) return false;
         if (quantity != null ? !quantity.equals(product.quantity) : product.quantity != null) return false;
         if (isActive != null ? !isActive.equals(product.isActive) : product.isActive != null) return false;
@@ -200,8 +186,7 @@ public class Product {
         if (modifyAt != null ? !modifyAt.equals(product.modifyAt) : product.modifyAt != null) return false;
         if (modifyBy != null ? !modifyBy.equals(product.modifyBy) : product.modifyBy != null) return false;
         if (image != null ? !image.equals(product.image) : product.image != null) return false;
-        if (productStatusId != null ? !productStatusId.equals(product.productStatusId) : product.productStatusId != null)
-            return false;
+
         if (saleprice != null ? !saleprice.equals(product.saleprice) : product.saleprice != null) return false;
 
         return true;
@@ -213,7 +198,6 @@ public class Product {
         result = 31 * result + (productName != null ? productName.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (categoryId != null ? categoryId.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (isActive != null ? isActive.hashCode() : 0);
@@ -222,55 +206,47 @@ public class Product {
         result = 31 * result + (modifyAt != null ? modifyAt.hashCode() : 0);
         result = 31 * result + (modifyBy != null ? modifyBy.hashCode() : 0);
         result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (productStatusId != null ? productStatusId.hashCode() : 0);
         result = 31 * result + (saleprice != null ? saleprice.hashCode() : 0);
         return result;
     }
 
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<Cartitem> getCartitemsById() {
-        return cartitemsById;
+    public Collection<Cartitem> getCartitems() {
+        return cartitems;
     }
 
-    public void setCartitemsById(Collection<Cartitem> cartitemsById) {
-        this.cartitemsById = cartitemsById;
+    public void setCartitems(Collection<Cartitem> cartitems) {
+        this.cartitems = cartitems;
     }
 
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<Orderdetail> getOrderdetailsById() {
-        return orderdetailsById;
+    public Collection<Orderdetail> getOrderdetails() {
+        return orderdetails;
     }
 
-    public void setOrderdetailsById(Collection<Orderdetail> orderdetailsById) {
-        this.orderdetailsById = orderdetailsById;
+    public void setOrderdetails(Collection<Orderdetail> orderdetails) {
+        this.orderdetails = orderdetails;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "categoryId", referencedColumnName = "id")
-    public Category getCategoryByCategoryId() {
-        return categoryByCategoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryByCategoryId(Category categoryByCategoryId) {
-        this.categoryByCategoryId = categoryByCategoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "productStatusId", referencedColumnName = "id")
-    public Productstatus getProductstatusByProductStatusId() {
-        return productstatusByProductStatusId;
+    public Productstatus getProductstatus() {
+        return productstatus;
     }
 
-    public void setProductstatusByProductStatusId(Productstatus productstatusByProductStatusId) {
-        this.productstatusByProductStatusId = productstatusByProductStatusId;
+    public void setProductstatus(Productstatus productstatus) {
+        this.productstatus = productstatus;
     }
 
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<Rate> getRatesById() {
-        return ratesById;
+    public Collection<Rate> getRates() {
+        return rates;
     }
 
-    public void setRatesById(Collection<Rate> ratesById) {
-        this.ratesById = ratesById;
+    public void setRates(Collection<Rate> rates) {
+        this.rates = rates;
     }
 }

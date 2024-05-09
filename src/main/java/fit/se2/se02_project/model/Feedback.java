@@ -5,17 +5,28 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "`feedback`")
 public class Feedback {
-    private long id;
-    private String comment;
-    private Short rate;
-    private Timestamp createdAt;
-    private String email;
-    private String name;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "comment")
+    private String comment;
+    @Basic
+    @Column(name = "rate")
+    private Short rate;
+    @Basic
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+    @Basic
+    @Column(name = "email")
+    private String email;
+    @Basic
+    @Column(name = "name")
+    private String name;
+
     public long getId() {
         return id;
     }
@@ -24,8 +35,6 @@ public class Feedback {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "comment", nullable = true, length = -1)
     public String getComment() {
         return comment;
     }
@@ -34,8 +43,6 @@ public class Feedback {
         this.comment = comment;
     }
 
-    @Basic
-    @Column(name = "rate", nullable = true)
     public Short getRate() {
         return rate;
     }
@@ -44,8 +51,6 @@ public class Feedback {
         this.rate = rate;
     }
 
-    @Basic
-    @Column(name = "created_at", nullable = true)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -54,8 +59,6 @@ public class Feedback {
         this.createdAt = createdAt;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = 255)
     public String getEmail() {
         return email;
     }
@@ -64,8 +67,6 @@ public class Feedback {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 100)
     public String getName() {
         return name;
     }

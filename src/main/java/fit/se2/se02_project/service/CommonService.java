@@ -95,7 +95,7 @@ public class CommonService {
     public String createToken(User user) {
         String userRole = roleRepository.findAll()
                 .stream()
-                .filter(r -> r.getId() == user.getRoleId())
+                .filter(r -> r.getId() == user.getRole().getId())
                 .map(r -> r.getName())
                 .findAny()
                 .orElse(null);

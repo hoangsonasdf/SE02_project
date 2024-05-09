@@ -5,15 +5,21 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(name = "`orderstatus`")
 public class Orderstatus {
-    private long id;
-    private String name;
-    private String bootstapicon;
-    private Collection<Order> ordersById;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "name")
+    private String name;
+    @Basic
+    @Column(name = "bootstapicon")
+    private String bootstapicon;
+    @OneToMany(mappedBy = "orderstatus")
+    private Collection<Order> orders;
+
     public long getId() {
         return id;
     }
@@ -22,8 +28,6 @@ public class Orderstatus {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 50)
     public String getName() {
         return name;
     }
@@ -32,8 +36,6 @@ public class Orderstatus {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "bootstapicon", nullable = true, length = 255)
     public String getBootstapicon() {
         return bootstapicon;
     }
@@ -64,12 +66,11 @@ public class Orderstatus {
         return result;
     }
 
-    @OneToMany(mappedBy = "orderstatusByOrderStatusId")
-    public Collection<Order> getOrdersById() {
-        return ordersById;
+    public Collection<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrdersById(Collection<Order> ordersById) {
-        this.ordersById = ordersById;
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
     }
 }

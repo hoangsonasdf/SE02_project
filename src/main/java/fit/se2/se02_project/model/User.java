@@ -6,29 +6,58 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
+@Table(name = "`user`")
 public class User {
-    private long id;
-    private String email;
-    private String phone;
-    private String username;
-    private String password;
-    private Long roleId;
-    private String firstName;
-    private String lastName;
-    private Timestamp dob;
-    private String address;
-    private String verifyCode;
-    private Timestamp verifyAt;
-    private Byte isActive;
-    private Timestamp createAt;
-    private Collection<Cart> cartsById;
-    private Collection<Order> ordersById;
-    private Collection<Rate> ratesById;
-    private Role roleByRoleId;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "email")
+    private String email;
+    @Basic
+    @Column(name = "phone")
+    private String phone;
+    @Basic
+    @Column(name = "username")
+    private String username;
+    @Basic
+    @Column(name = "password")
+    private String password;
+    @Basic
+    @Column(name = "firstName")
+    private String firstName;
+    @Basic
+    @Column(name = "lastName")
+    private String lastName;
+    @Basic
+    @Column(name = "dob")
+    private Timestamp dob;
+    @Basic
+    @Column(name = "address")
+    private String address;
+    @Basic
+    @Column(name = "verifyCode")
+    private String verifyCode;
+    @Basic
+    @Column(name = "verifyAt")
+    private Timestamp verifyAt;
+    @Basic
+    @Column(name = "isActive")
+    private Byte isActive;
+    @Basic
+    @Column(name = "createAt")
+    private Timestamp createAt;
+    @OneToMany(mappedBy = "user")
+    private Collection<Cart> carts;
+    @OneToMany(mappedBy = "user")
+    private Collection<Order> orders;
+    @OneToMany(mappedBy = "user")
+    private Collection<Rate> rates;
+    @ManyToOne
+    @JoinColumn(name = "RoleId", referencedColumnName = "id")
+    private Role role;
+
     public long getId() {
         return id;
     }
@@ -37,8 +66,6 @@ public class User {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = 255)
     public String getEmail() {
         return email;
     }
@@ -47,8 +74,6 @@ public class User {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = true, length = 11)
     public String getPhone() {
         return phone;
     }
@@ -57,8 +82,6 @@ public class User {
         this.phone = phone;
     }
 
-    @Basic
-    @Column(name = "username", nullable = true, length = 50)
     public String getUsername() {
         return username;
     }
@@ -67,8 +90,6 @@ public class User {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "password", nullable = true, length = 128)
     public String getPassword() {
         return password;
     }
@@ -77,18 +98,6 @@ public class User {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "RoleId", nullable = true)
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    @Basic
-    @Column(name = "firstName", nullable = true, length = 50)
     public String getFirstName() {
         return firstName;
     }
@@ -97,8 +106,6 @@ public class User {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "lastName", nullable = true, length = 50)
     public String getLastName() {
         return lastName;
     }
@@ -107,8 +114,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "dob", nullable = true)
     public Timestamp getDob() {
         return dob;
     }
@@ -117,8 +122,6 @@ public class User {
         this.dob = dob;
     }
 
-    @Basic
-    @Column(name = "address", nullable = true, length = -1)
     public String getAddress() {
         return address;
     }
@@ -127,8 +130,6 @@ public class User {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "verifyCode", nullable = true, length = 6)
     public String getVerifyCode() {
         return verifyCode;
     }
@@ -137,8 +138,6 @@ public class User {
         this.verifyCode = verifyCode;
     }
 
-    @Basic
-    @Column(name = "verifyAt", nullable = true)
     public Timestamp getVerifyAt() {
         return verifyAt;
     }
@@ -147,8 +146,6 @@ public class User {
         this.verifyAt = verifyAt;
     }
 
-    @Basic
-    @Column(name = "isActive", nullable = true)
     public Byte getIsActive() {
         return isActive;
     }
@@ -157,8 +154,6 @@ public class User {
         this.isActive = isActive;
     }
 
-    @Basic
-    @Column(name = "createAt", nullable = true)
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -179,7 +174,6 @@ public class User {
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (roleId != null ? !roleId.equals(user.roleId) : user.roleId != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (dob != null ? !dob.equals(user.dob) : user.dob != null) return false;
@@ -199,7 +193,6 @@ public class User {
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (roleId != null ? roleId.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (dob != null ? dob.hashCode() : 0);
@@ -211,40 +204,35 @@ public class User {
         return result;
     }
 
-    @OneToMany(mappedBy = "userByUserId")
-    public Collection<Cart> getCartsById() {
-        return cartsById;
+    public Collection<Cart> getCarts() {
+        return carts;
     }
 
-    public void setCartsById(Collection<Cart> cartsById) {
-        this.cartsById = cartsById;
+    public void setCarts(Collection<Cart> carts) {
+        this.carts = carts;
     }
 
-    @OneToMany(mappedBy = "userByUserId")
-    public Collection<Order> getOrdersById() {
-        return ordersById;
+    public Collection<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrdersById(Collection<Order> ordersById) {
-        this.ordersById = ordersById;
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
     }
 
-    @OneToMany(mappedBy = "userByUserId")
-    public Collection<Rate> getRatesById() {
-        return ratesById;
+    public Collection<Rate> getRates() {
+        return rates;
     }
 
-    public void setRatesById(Collection<Rate> ratesById) {
-        this.ratesById = ratesById;
+    public void setRates(Collection<Rate> rates) {
+        this.rates = rates;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RoleId", referencedColumnName = "id")
-    public Role getRoleByRoleId() {
-        return roleByRoleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleByRoleId(Role roleByRoleId) {
-        this.roleByRoleId = roleByRoleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

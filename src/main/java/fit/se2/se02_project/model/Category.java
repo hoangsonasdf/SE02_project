@@ -6,20 +6,36 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
+@Table(name = "`category`")
 public class Category {
-    private long id;
-    private String categoryName;
-    private String description;
-    private Byte isActive;
-    private Timestamp createAt;
-    private String createBy;
-    private Timestamp modifyAt;
-    private String modifyBy;
-    private Collection<Product> productsById;
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    private long id;
+    @Basic
+    @Column(name = "categoryName")
+    private String categoryName;
+    @Basic
+    @Column(name = "description")
+    private String description;
+    @Basic
+    @Column(name = "isActive")
+    private Byte isActive;
+    @Basic
+    @Column(name = "createAt")
+    private Timestamp createAt;
+    @Basic
+    @Column(name = "createBy")
+    private String createBy;
+    @Basic
+    @Column(name = "modifyAt")
+    private Timestamp modifyAt;
+    @Basic
+    @Column(name = "modifyBy")
+    private String modifyBy;
+    @OneToMany(mappedBy = "category")
+    private Collection<Product> products;
+
     public long getId() {
         return id;
     }
@@ -28,8 +44,6 @@ public class Category {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "categoryName", nullable = true, length = 25)
     public String getCategoryName() {
         return categoryName;
     }
@@ -38,8 +52,6 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
     public String getDescription() {
         return description;
     }
@@ -48,8 +60,6 @@ public class Category {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "isActive", nullable = true)
     public Byte getIsActive() {
         return isActive;
     }
@@ -58,8 +68,6 @@ public class Category {
         this.isActive = isActive;
     }
 
-    @Basic
-    @Column(name = "createAt", nullable = true)
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -68,8 +76,6 @@ public class Category {
         this.createAt = createAt;
     }
 
-    @Basic
-    @Column(name = "createBy", nullable = true, length = 50)
     public String getCreateBy() {
         return createBy;
     }
@@ -78,8 +84,6 @@ public class Category {
         this.createBy = createBy;
     }
 
-    @Basic
-    @Column(name = "modifyAt", nullable = true)
     public Timestamp getModifyAt() {
         return modifyAt;
     }
@@ -88,8 +92,6 @@ public class Category {
         this.modifyAt = modifyAt;
     }
 
-    @Basic
-    @Column(name = "modifyBy", nullable = true, length = 50)
     public String getModifyBy() {
         return modifyBy;
     }
@@ -132,12 +134,11 @@ public class Category {
         return result;
     }
 
-    @OneToMany(mappedBy = "categoryByCategoryId")
-    public Collection<Product> getProductsById() {
-        return productsById;
+    public Collection<Product> getProducts() {
+        return products;
     }
 
-    public void setProductsById(Collection<Product> productsById) {
-        this.productsById = productsById;
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
     }
 }
