@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -83,10 +81,10 @@ public class AuthController {
 
     @PostMapping("/logout")
     public String logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("token", null); // Create a new cookie
-        cookie.setMaxAge(0); // Immediately expire the cookie
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
-        cookie.setPath("/"); // This should be the same path as the one the cookie was set to
+        cookie.setPath("/");
         response.addCookie(cookie);
         return "redirect:/";
     }

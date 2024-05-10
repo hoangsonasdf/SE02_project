@@ -4,7 +4,6 @@ import fit.se2.se02_project.dto.CategoryDTO;
 import fit.se2.se02_project.dto.FeedbackDTO;
 import fit.se2.se02_project.model.Category;
 import fit.se2.se02_project.model.Feedback;
-import fit.se2.se02_project.model.Product;
 import fit.se2.se02_project.model.User;
 import fit.se2.se02_project.repositories.CategoryRepository;
 import fit.se2.se02_project.repositories.FeedbackRepository;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +42,7 @@ public class HomeController {
                 .map(this::toCategoriesDTO)
                 .collect(Collectors.toList());
 
-        // Add feedbacks and categories to the model
+
         model.addAttribute("feedbacks", feedbacks);
         model.addAttribute("categories", categories);
         model.addAttribute("user", currentUser);
