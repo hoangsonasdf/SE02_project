@@ -13,6 +13,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -78,17 +79,12 @@ public class CommonService {
     }
 
     public void sendEmail(String subject, String body, String to) {
-        MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = null;
-        try {
-            helper = new MimeMessageHelper(message, true);
-            helper.setFrom(fromMail);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(body, false);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromMail);
+        message.setTo(to);
+        message.setText(body);
+        message.setSubject(subject);
+
         emailSender.send(message);
     }
 
