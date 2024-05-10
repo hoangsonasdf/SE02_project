@@ -9,16 +9,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
+@RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private CommonService commonService;
@@ -27,52 +27,49 @@ public class AuthController {
     private UserRepository userRepository;
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
-        model.addAttribute("request", new LoginRequest()); // Add empty LoginDTO to model for form binding
+    public String login() {
         return "login";
     }
 
-//    @PostMapping("/login")
-//    public String login(@ModelAttribute("request") LoginRequest request,
-//                        HttpServletResponse response,
-//                        RedirectAttributes redirectAttributes) {
-//        try {
-//            Map<String, String> errorList = new HashMap<>();
-//            if (request.getUsername() == null) {
-//                errorList.put("NullUsername", "* Username cannot be empty");
-//            }
-//            if (request.getPassword() == null) {
-//                errorList.put("NullPassword", "* Password cannot be empty");
-//            }
-//            if (!errorList.isEmpty()) {
-//                redirectAttributes.addFlashAttribute("errorList", errorList);
-//                return "redirect:/login";
-//            }
-//
-//            String hashedPassword = commonService.hash(request.getPassword());
-//            String hashedPasswordLower = hashedPassword.toLowerCase();
-//            User user = userRepository.findByUsernameIgnoreCase(request.getUsername());
-//            if (user == null || !user.getPassword().equalsIgnoreCase(hashedPasswordLower)) {
-//                errorList.put("Invalid", "* Username or Password is not valid");
-//                redirectAttributes.addFlashAttribute("errorList", errorList);
-//                return "redirect:/login";
-//            }
-//
-//            String token = commonService.createToken(user);
-//            Cookie tokenCookie = new Cookie("token", token);
-//            tokenCookie.setHttpOnly(true);
-//            tokenCookie.setMaxAge(1800); // 30 minutes
-//            response.addCookie(tokenCookie);
-//
-//            if (user.getRoleId() == 1) {
-//                int currentMonth = LocalDateTime.now().getMonthValue();
-//                int currentYear = LocalDateTime.now().getYear();
-//                return "redirect:/dashboard?year=" + currentYear + "&month=" + currentMonth;
-//            } else {
-//                return "redirect:/home";
-//            }
-//        } catch (Exception ex) {
-//            return "redirect:/error?message=" + ex.getMessage();
-//        }
-//    }
+    @PostMapping("/login")
+    public String login(@ModelAttribute LoginRequest request, HttpServletResponse response) {
+        try {
+            Map<String, String> errorList = new HashMap<>();
+            if (request.getUsername() == null) {
+                errorList.put("NullUsername", "* Username cannot be empty");
+            }
+            if (request.getPassword() == null) {
+                errorList.put("NullPassword", "* Password cannot be empty");
+            }
+            if (!errorList.isEmpty()) {
+                return "login";
+            }
+            String hashedPassword = commonService.hash(request.getPassword());
+            String hashedPasswordLower = hashedPassword.toLowerCase();
+            User user = userRepository.findAll()
+                    .stream()
+                    .filter(u -> Objects.equals(u.getUsername(), request.getUsername()) && Objects.equals(u.getPassword(), hashedPasswordLower))
+                    .findAny()
+                    .orElse(null);
+            if (user == null) {
+                errorList.put("Invalid", "* Username or Password is not valid");
+                return "login";
+            }
+
+            String token = commonService.createToken(user);
+            Cookie cookie = new Cookie("token", token);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            cookie.setMaxAge(30 * 60);
+            response.addCookie(cookie);
+
+            if (user.getRole().getId() == 1) {
+                return "/dashboard/index";
+            } else {
+                return "/";
+            }
+        } catch (Exception ex) {
+            return "error";
+        }
+    }
 }

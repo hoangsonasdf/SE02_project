@@ -140,7 +140,7 @@ public class CommonService {
 
             return userRepository.findAll()
                     .stream()
-                    .filter(u -> u.getUsername() == username)
+                    .filter(u -> Objects.equals(u.getUsername(), username))
                     .findAny()
                     .orElse(null);
         } catch (Exception e) {
