@@ -22,7 +22,7 @@ public class JwtCookieInterceptor implements HandlerInterceptor {
                 }
             }
         }
-        response.sendRedirect("/Auth/Login");
+        response.sendRedirect("/auth/login");
         return false;
     }
     @Override

@@ -40,6 +40,9 @@ public class OrderController {
     @GetMapping("/history/{statusId}")
     public String history(@PathVariable Long statusId, Model model) {
         User currentUser = commonService.getCurrentUser();
+        if (currentUser == null){
+            return "redirect:/auth/login";
+        }
         long countOrder = orderRepository.findAll()
                 .stream()
                 .filter(o -> o.getUser().getId() == currentUser.getId() && o.getOrderstatus().getId() == statusId)

@@ -57,8 +57,8 @@
                 <ul>
                     <li><a class="nav-link" th:href="@{/}">Home</a></li>
                     <li><a class="nav-link" th:href="@{/products}">Products</a></li>
-                    <li><a class="nav-link" th:href="@{/about}">About</a></li>
-                    <li><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+                    <li><a class="nav-link" th:href="@{/about/index}">About</a></li>
+                    <li><a class="nav-link" th:href="@{/feedback/index}">Contact</a></li>
                     <li class="dropdown" th:if="${user == null}">
                         <a th:href="@{/auth/login}">
                             <i class="bi bi bi-person" style="font-size: 30px;"></i>
@@ -70,7 +70,7 @@
                     </li>
 
                     <li class="dropdown" th:if="${user != null}">
-                        <a th:href="@{/profile}">
+                        <a th:href="@{/user/profile}">
                             Hi, <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
                             <i class="bi bi-caret-down-fill"></i>
                         </a>
