@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -36,7 +38,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginRequest request, HttpServletResponse response, Model model) {
+    public String login(@ModelAttribute LoginRequest request, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
         try {
             Map<String, String> errorList = new HashMap<>();
             if (request.getUsername() == null || Objects.equals(request.getUsername(), "")) {
@@ -70,7 +72,11 @@ public class AuthController {
             response.addCookie(cookie);
 
             if (user.getRole().getId() == 1) {
-                return "redirect:/dashboard/index";
+                int currentMonth = LocalDate.now().getMonthValue();
+                int currentYear = LocalDate.now().getYear();
+                String redirectUrl = String.format("redirect:/dashboard/index?year=%d&month=%d", currentYear, currentMonth);
+
+                return redirectUrl;
             } else {
                 return "redirect:/";
             }
