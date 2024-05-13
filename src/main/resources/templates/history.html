@@ -23,7 +23,7 @@
                                 <i th:class="${status.bootstapicon}"></i>
                             </div>
                             <div class="col">
-                                <a th:href="@{/Order/History(statusId=${status.id})}" th:text="${status.name}"></a>
+                                <a th:href="@{'/order/history/' + ${status.id}}" th:text="${status.name}"></a>
                             </div>
                         </div>
                     </div>
@@ -59,8 +59,8 @@
                                             <div class="col-2 fw-bold">QUANTITY</div>
                                             <div class="col-2 fw-bold">PRICE</div>
                                             <div class="col-2">
-                                                <form th:action="@{'/Order/Cancel'}" method="post">
-                                                    <input type="hidden" name="orderID" th:value="${order.id}">
+                                                <form th:action="@{'/order/cancel'}" method="post">
+                                                    <input type="hidden" name="orderId" th:value="${order.id}">
                                                     <button type="submit" class="btn btn-outline-dark rounded-0">CANCEL</button>
                                                 </form>
                                             </div>

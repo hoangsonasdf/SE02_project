@@ -29,7 +29,7 @@ public class FeedbackController {
         User currentUser = commonService.getCurrentUser();
         model.addAttribute("message", message);
         model.addAttribute("user", currentUser);
-        return "index";
+        return "feedback";
     }
 
     @PostMapping("/send")

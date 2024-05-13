@@ -18,7 +18,7 @@ public class Feedback {
     @Column(name = "rate")
     private Short rate;
     @Basic
-    @Column(name = "created_at")
+    @Column(name = "createAt")
     private Timestamp createdAt;
     @Basic
     @Column(name = "email")
