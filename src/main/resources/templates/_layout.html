@@ -77,6 +77,7 @@
                         <ul>
                             <li><a th:href="@{/user/profile}">Profile</a></li>
                             <li><a th:href="@{/order/history/5}">History order</a></li>
+                            <li th:if="${user.role.id == 1}"><a th:href="@{/dashboard/index(year=${#dates.format(#calendars.createNow(), 'yyyy')}, month=${#dates.format(#calendars.createNow(), 'MM')})}">Admin site</a></li>
                             <li class="d-flex justify-content-end mt-4">
                                 <form method="POST" th:action="@{/auth/logout}">
                                     <button class="btn btn-danger rounded-0 mx-2" type="submit" name="logout">Log out</button>

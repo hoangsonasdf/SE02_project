@@ -25,10 +25,10 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a th:href="@{/dashboard}" class="nav-link">Home</a>
+            <a th:href="@{/dashboard/index(year=${#dates.format(#calendars.createNow(), 'yyyy')}, month=${#dates.format(#calendars.createNow(), 'MM')})}" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a th:href="@{/home}" class="nav-link">Web</a>
+            <a th:href="@{/}" class="nav-link">Web</a>
         </li>
     </ul>
 
