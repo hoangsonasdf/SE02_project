@@ -66,7 +66,8 @@ public class DashboardController {
         List<Integer> values = data.stream()
                 .map(CountProductDTO::getCount)
                 .collect(Collectors.toList());
-
+        model.addAttribute("currentMonth", month);
+        model.addAttribute("currentYear", year);
         model.addAttribute("months", months);
         model.addAttribute("years", years);
         model.addAttribute("labels", labels);
@@ -100,7 +101,8 @@ public class DashboardController {
         List<Integer> values = data.stream()
                 .map(CountCategoryDTO::getTotal)
                 .collect(Collectors.toList());
-
+        model.addAttribute("currentMonth", month);
+        model.addAttribute("currentYear", year);
         model.addAttribute("months", months);
         model.addAttribute("years", years);
         model.addAttribute("labels", labels);
@@ -159,6 +161,7 @@ public class DashboardController {
         List<String> labels = data.stream().map(ProfitDTO::getMonth).collect(Collectors.toList());
         List<BigDecimal> values = data.stream().map(ProfitDTO::getTotal).collect(Collectors.toList());
 
+        model.addAttribute("currentYear", year);
         model.addAttribute("years", years);
         model.addAttribute("months", months);
         model.addAttribute("labels", labels);

@@ -28,7 +28,7 @@
               <div class="p-3 col">
                 <label  class="form-label">Year:</label>
                 <select class="form-select form-select-lg w-50" aria-label=".form-select-lg example" name="year">
-                  <option th:each="year : ${years}" th:value="${year.value}" th:text="${year.text}"></option>
+                  <option th:each="year : ${years}" th:value="${year.value}" th:text="${year.text}" th:selected="${year.value == currentYear}"></option>
                 </select>
               </div>
               <div class="p-3 col">

@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/vendor/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="/vendor/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Favicons -->
+    <link rel="icon" th:href="@{/img/favicon.png}">
+    <link rel="apple-touch-icon" th:href="@{/img/favicon.png}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Dashboard</title>
 </head>
@@ -95,7 +98,6 @@
                 <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                 <li class="nav-header">MENU</li>
-                <
                 <li class="nav-item">
                     <a th:href="@{/dashboard/index(year=${#dates.format(#calendars.createNow(), 'yyyy')}, month=${#dates.format(#calendars.createNow(), 'MM')})}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
@@ -128,14 +130,26 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/user/index}" class="nav-link">
+                    <a th:href="@{/product/add}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
-                        <p>USER MANAGEMENT</p>
+                        <p>ADD PRODUCT</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/order/all/5}" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>ORDER MANAGEMENT</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/feedback/all}" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>FEEDBACK</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <form method="POST" th:action="@{/auth/logout}">
-                        <button type="submit" style="position: absolute; right: 4px; left: 4px; bottom: 10px;"
+                        <button type="submit" style="right: 4px; left: 4px; bottom: 10px;"
                                 class=" btn btn-danger">Logout
                         </button>
                     </form>

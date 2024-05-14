@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/vendor/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="/vendor/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Favicons -->
+    <link rel="icon" th:href="@{/img/favicon.png}">
+    <link rel="apple-touch-icon" th:href="@{/img/favicon.png}">
     <title>Admin</title>
 </head>
 <body>
@@ -94,38 +97,59 @@
                          with font-awesome or any other icon font library -->
                 <li class="nav-header">MENU</li>
                 <li class="nav-item">
-                    <a th:href="@{/dashboard(month=${currentMonth}, year=${currentYear})}" class="nav-link">
+                    <a th:href="@{/dashboard/index(year=${#dates.format(#calendars.createNow(), 'yyyy')}, month=${#dates.format(#calendars.createNow(), 'MM')})}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
-                        <p>Show top best seller</p>
+                        <p>
+                            SHOW TOP BEST SELLER
+                        </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/dashboard/top-categories(month=${currentMonth}, year=${currentYear})}" class="nav-link">
+                    <a th:href="@{/dashboard/topCategories(year=${#dates.format(#calendars.createNow(), 'yyyy')}, month=${#dates.format(#calendars.createNow(), 'MM')})}"
+                       class="nav-link">
                         <i class="nav-icon far fa-image"></i>
-                        <p>Show top best seller categories</p>
+                        <p>
+                            SHOW TOP BEST SELLER CATEGORIES
+                        </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/dashboard/total-amount(year=${currentYear})}" class="nav-link">
+                    <a th:href="@{/dashboard/profit(year=${#dates.format(#calendars.createNow(), 'yyyy')})}"
+                       class="nav-link">
+
                         <i class="nav-icon far fa-image"></i>
-                        <p>Show profit</p>
+                        <p>SHOW PROFIT</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/products}" class="nav-link">
+                    <a th:href="@{/product/admin}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
                         <p>PRODUCT</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/users}" class="nav-link">
+                    <a th:href="@{/product/add}" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
-                        <p>USER MANAGEMENT</p>
+                        <p>ADD PRODUCT</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" style="position: absolute; right: 4px; left: 4px; bottom: 10px;" class="btn btn-danger">Logout</button>
+                    <a th:href="@{/order/all/5}" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>ORDER MANAGEMENT</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/feedback/all}" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>FEEDBACK</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" th:action="@{/auth/logout}">
+                        <button type="submit" style="right: 4px; left: 4px; bottom: 10px;"
+                                class=" btn btn-danger">Logout
+                        </button>
                     </form>
                 </li>
             </ul>
@@ -134,9 +158,9 @@
     </div>
     <!-- /.sidebar -->
 </aside>
-<section layout:fragment="content">
+<div layout:fragment="content">
     <!-- content page will override this -->
-</section>
+</div>
 
 <footer class="main-footer">
     <strong>Copyright &copy; Team-7 &nbsp;<a th:href="@{/dashboard/}"> E-PROJECT </a></strong>

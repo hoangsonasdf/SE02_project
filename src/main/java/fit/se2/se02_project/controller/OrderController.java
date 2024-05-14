@@ -2,6 +2,7 @@ package fit.se2.se02_project.controller;
 
 import fit.se2.se02_project.dto.ListOrderDTO;
 import fit.se2.se02_project.dto.OrderProductDTO;
+import fit.se2.se02_project.dto.OrderStatusDTO;
 import fit.se2.se02_project.model.*;
 import fit.se2.se02_project.repositories.*;
 import fit.se2.se02_project.request.PlaceOrderRequest;
@@ -72,6 +73,39 @@ public class OrderController {
         model.addAttribute("user", currentUser);
 
         return "history";
+    }
+
+    @GetMapping("/all/{statusId}")
+    public String all(@PathVariable Long statusId, Model model){
+        User currentUser = commonService.getCurrentUser();
+        if (currentUser == null && currentUser.getRole().getId() != 1) {
+            return "redirect:/auth/login";
+        }
+
+        List<ListOrderDTO> listOrder = orderRepository.findAll()
+                .stream()
+                .filter(o -> o.getOrderstatus().getId() == statusId)
+                .map(this::toListOrderDTO)
+                .collect(Collectors.toList());
+        model.addAttribute("orders", listOrder);
+
+        List<OrderStatusDTO> orderStatus = orderStatusRepository.findAll()
+                .stream()
+                .map(os -> new OrderStatusDTO(os.getId(),os.getName()))
+                .collect(Collectors.toList());
+        model.addAttribute("orderStatus", orderStatus);
+        return "allorder";
+    }
+
+    @PostMapping("/update/{orderId}")
+    public String update(@PathVariable Long orderId, Long statusId){
+        Order order = orderRepository.findById(orderId)
+                .orElse(null);
+        if(order != null){
+            order.setOrderstatus(orderStatusRepository.findById(statusId).orElse(null));
+            orderRepository.save(order);
+        }
+        return "redirect:/order/all/" + statusId;
     }
 
     @PostMapping("/add")
@@ -179,7 +213,14 @@ public class OrderController {
                 .stream()
                 .filter(od -> od.getOrder().getId() == order.getId())
                 .map(this::toOrderProductDTO)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()),
+                order.getOrderstatus().getId(),
+                order.getOrderstatus().getName(),
+                order.getUser().getId(),
+                order.getFirstname(),
+                order.getLastName(),
+                order.getAddress(),
+                order.getUser().getEmail());
     }
 
     private OrderProductDTO toOrderProductDTO(Orderdetail orderdetail) {

@@ -5,12 +5,15 @@ import java.math.BigDecimal;
 public class ProductDTO {
     private long id;
     private String productName;
+    private long categoryId;
+    private long statusId;
     private String categoryName;
     private String statusName;
     private BigDecimal price;
     private int quantity;
     private BigDecimal salePrice;
     private String image;
+    private String description;
 
     public ProductDTO() {
     }
@@ -24,6 +27,33 @@ public class ProductDTO {
         this.quantity = quantity;
         this.salePrice = salePrice;
         this.image = image;
+    }
+
+    public ProductDTO(long id, String productName, long categoryId, long statusId, String categoryName, String statusName, BigDecimal price, int quantity, BigDecimal salePrice, String image) {
+        this.id = id;
+        this.productName = productName;
+        this.categoryId = categoryId;
+        this.statusId = statusId;
+        this.categoryName = categoryName;
+        this.statusName = statusName;
+        this.price = price;
+        this.quantity = quantity;
+        this.salePrice = salePrice;
+        this.image = image;
+    }
+
+    public ProductDTO(long id, String productName, long categoryId, long statusId, String categoryName, String statusName, BigDecimal price, int quantity, BigDecimal salePrice, String image, String description) {
+        this.id = id;
+        this.productName = productName;
+        this.categoryId = categoryId;
+        this.statusId = statusId;
+        this.categoryName = categoryName;
+        this.statusName = statusName;
+        this.price = price;
+        this.quantity = quantity;
+        this.salePrice = salePrice;
+        this.image = image;
+        this.description = description;
     }
 
     public long getId() {
@@ -88,5 +118,29 @@ public class ProductDTO {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public long getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(long statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
