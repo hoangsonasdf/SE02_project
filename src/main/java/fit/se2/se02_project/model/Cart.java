@@ -14,7 +14,7 @@ public class Cart {
     private long id;
 
     @Basic
-    @Column(name = "created_at")
+    @Column(name = "createAt")
     private Timestamp createdAt;
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")

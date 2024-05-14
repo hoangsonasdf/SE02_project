@@ -26,7 +26,6 @@ CREATE TABLE `cart` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `userId` bigint DEFAULT NULL,
   `createAt` timestamp NULL DEFAULT NULL,
-  `created_at` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Cart_userId_fk` (`userId`),
   CONSTRAINT `Cart_userId_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
@@ -39,7 +38,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (1,2,'2024-04-05 04:31:08',NULL),(2,1,'2024-04-05 07:29:13',NULL),(3,3,NULL,'2024-05-13 09:02:23.551000');
+INSERT INTO `cart` VALUES (1,2,'2024-04-05 04:31:08'),(2,1,'2024-04-05 07:29:13'),(3,3,'2024-05-13 02:02:24');
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -441,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-14 17:31:27
+-- Dump completed on 2024-05-14 17:40:49
