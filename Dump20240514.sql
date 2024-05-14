@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `userId` bigint DEFAULT NULL,
-  `createAt` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Cart_userId_fk` (`userId`),
-  CONSTRAINT `Cart_userId_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `userId` bigint DEFAULT NULL,
+                        `createAt` timestamp NULL DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `Cart_userId_fk` (`userId`),
+                        CONSTRAINT `Cart_userId_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,16 +50,16 @@ DROP TABLE IF EXISTS `cartitem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cartitem` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `productID` bigint DEFAULT NULL,
-  `cartID` bigint DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `CartItem_productID_fk` (`productID`),
-  KEY `CartItem_cartID_fk` (`cartID`),
-  CONSTRAINT `CartItem_cartID_fk` FOREIGN KEY (`cartID`) REFERENCES `cart` (`id`),
-  CONSTRAINT `CartItem_productID_fk` FOREIGN KEY (`productID`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                            `id` bigint NOT NULL AUTO_INCREMENT,
+                            `productID` bigint DEFAULT NULL,
+                            `cartID` bigint DEFAULT NULL,
+                            `quantity` int DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            KEY `CartItem_productID_fk` (`productID`),
+                            KEY `CartItem_cartID_fk` (`cartID`),
+                            CONSTRAINT `CartItem_cartID_fk` FOREIGN KEY (`cartID`) REFERENCES `cart` (`id`),
+                            CONSTRAINT `CartItem_productID_fk` FOREIGN KEY (`productID`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,16 +79,16 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `categoryName` varchar(25) DEFAULT NULL,
-  `description` text,
-  `isActive` tinyint DEFAULT NULL,
-  `createAt` timestamp NULL DEFAULT NULL,
-  `createBy` varchar(50) DEFAULT NULL,
-  `modifyAt` timestamp NULL DEFAULT NULL,
-  `modifyBy` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                            `id` bigint NOT NULL AUTO_INCREMENT,
+                            `categoryName` varchar(25) DEFAULT NULL,
+                            `description` text,
+                            `isActive` tinyint DEFAULT NULL,
+                            `createAt` timestamp NULL DEFAULT NULL,
+                            `createBy` varchar(50) DEFAULT NULL,
+                            `modifyAt` timestamp NULL DEFAULT NULL,
+                            `modifyBy` varchar(50) DEFAULT NULL,
+                            PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `feedback` (
   `email` varchar(255) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +151,7 @@ CREATE TABLE `order` (
   KEY `Order_orderStatusId_fk` (`orderStatusId`),
   CONSTRAINT `Order_orderStatusId_fk` FOREIGN KEY (`orderStatusId`) REFERENCES `orderstatus` (`id`),
   CONSTRAINT `Order_userId_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `orderdetail` (
   KEY `OrderDetail_orderID_fk` (`orderID`),
   CONSTRAINT `OrderDetail_orderID_fk` FOREIGN KEY (`orderID`) REFERENCES `order` (`id`),
   CONSTRAINT `OrderDetail_productID_fk` FOREIGN KEY (`productID`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `orderstatus` (
   `name` varchar(50) DEFAULT NULL,
   `bootstapicon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,7 +231,7 @@ CREATE TABLE `payment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +272,7 @@ CREATE TABLE `product` (
   KEY `Product_productStatusId_fk` (`productStatusId`),
   CONSTRAINT `Product_categoryId_fk` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`),
   CONSTRAINT `Product_productStatusId_fk` FOREIGN KEY (`productStatusId`) REFERENCES `productstatus` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,7 +296,7 @@ CREATE TABLE `productstatus` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -327,7 +327,7 @@ CREATE TABLE `rate` (
   KEY `Rate_productId_fk` (`productId`),
   CONSTRAINT `Rate_productId_fk` FOREIGN KEY (`productId`) REFERENCES `product` (`id`),
   CONSTRAINT `Rate_userId_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +350,7 @@ CREATE TABLE `role` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -380,7 +380,7 @@ CREATE TABLE `transaction` (
   KEY `Transaction_paymentID_fk` (`paymentID`),
   CONSTRAINT `Transaction_orderID_fk` FOREIGN KEY (`orderID`) REFERENCES `order` (`id`),
   CONSTRAINT `Transaction_paymentID_fk` FOREIGN KEY (`paymentID`) REFERENCES `payment` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -418,7 +418,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `User_RoleId_fk` (`RoleId`),
   CONSTRAINT `User_RoleId_fk` FOREIGN KEY (`RoleId`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-14 17:40:49
+-- Dump completed on 2024-05-14 19:57:37
