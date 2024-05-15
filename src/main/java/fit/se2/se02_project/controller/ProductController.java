@@ -118,7 +118,11 @@ public class ProductController {
         newProduct.setQuantity(Integer.parseInt(request.getQuantity()));
         newProduct.setPrice(new BigDecimal(request.getPrice()));
         newProduct.setProductstatus(productStatusRepository.findById(request.getProductStatusId()).orElse(null));
-        newProduct.setSaleprice(new BigDecimal(request.getSaleprice()));
+        if (request.getSaleprice() == null || request.getSaleprice().isEmpty()) {
+            newProduct.setSaleprice(null);
+        } else {
+            newProduct.setSaleprice(new BigDecimal(request.getSaleprice()));
+        }
         newProduct.setCategory(categoryRepository.findById(request.getCategoryId()).orElse(null));
         newProduct.setDescription(request.getDescription());
         newProduct.setModifyAt(new Timestamp(System.currentTimeMillis()));
@@ -189,7 +193,11 @@ public class ProductController {
         newProduct.setQuantity(Integer.parseInt(request.getQuantity()));
         newProduct.setPrice(new BigDecimal(request.getPrice()));
         newProduct.setProductstatus(productStatusRepository.findById(request.getProductStatusId()).orElse(null));
-        newProduct.setSaleprice(new BigDecimal(request.getSaleprice()));
+        if (request.getSaleprice() == null || request.getSaleprice().isEmpty()) {
+            newProduct.setSaleprice(null);
+        } else {
+            newProduct.setSaleprice(new BigDecimal(request.getSaleprice()));
+        }
         newProduct.setCategory(categoryRepository.findById(request.getCategoryId()).orElse(null));
         newProduct.setDescription(request.getDescription());
         newProduct.setIsActive((byte) 1);
