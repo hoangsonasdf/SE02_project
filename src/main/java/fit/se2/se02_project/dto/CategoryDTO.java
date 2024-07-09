@@ -15,4 +15,9 @@ public class CategoryDTO {
     private String description;
     private String image;
 
+    public CategoryDTO(long id, String categoryName) {
+        this.id = id;
+        this.categoryName = categoryName;
+    }
+
 }

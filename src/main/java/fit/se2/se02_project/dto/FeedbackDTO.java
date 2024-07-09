@@ -15,5 +15,9 @@ public class FeedbackDTO {
     private String comment;
     private String email;
     private Short rate;
+    public FeedbackDTO(String name, String comment) {
+        this.name = name;
+        this.comment = comment;
+    }
 
 }
